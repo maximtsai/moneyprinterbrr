@@ -1,0 +1,238 @@
+{
+	"textures": [
+		{
+			"image": "sprites/gameSprites.png",
+			"format": "RGBA8888",
+			"size": {
+				"h": 628,
+				"w": 606
+			},
+			"frames": [
+				{
+					"filename": "black_pixel",
+					"frame": {
+						"x": 402,
+						"y": 312,
+						"w": 2,
+						"h": 2
+					},
+					"sourceSize": {
+						"w": 2,
+						"h": 2
+					},
+					"rotated": false
+				},
+				{
+					"filename": "blank",
+					"frame": {
+						"x": 0,
+						"y": 0,
+						"w": 400,
+						"h": 320
+					},
+					"sourceSize": {
+						"w": 400,
+						"h": 320
+					},
+					"rotated": false
+				},
+				{
+					"filename": "credits",
+					"frame": {
+						"x": 252,
+						"y": 414,
+						"w": 250,
+						"h": 90
+					},
+					"sourceSize": {
+						"w": 250,
+						"h": 90
+					},
+					"rotated": false
+				},
+				{
+					"filename": "creditsHover",
+					"frame": {
+						"x": 0,
+						"y": 506,
+						"w": 250,
+						"h": 90
+					},
+					"sourceSize": {
+						"w": 250,
+						"h": 90
+					},
+					"rotated": false
+				},
+				{
+					"filename": "creditsPress",
+					"frame": {
+						"x": 252,
+						"y": 506,
+						"w": 250,
+						"h": 90
+					},
+					"sourceSize": {
+						"w": 250,
+						"h": 90
+					},
+					"rotated": false
+				},
+				{
+					"filename": "menu",
+					"frame": {
+						"x": 402,
+						"y": 231,
+						"w": 150,
+						"h": 75
+					},
+					"sourceSize": {
+						"w": 150,
+						"h": 75
+					},
+					"rotated": false
+				},
+				{
+					"filename": "menuHover",
+					"frame": {
+						"x": 402,
+						"y": 0,
+						"w": 150,
+						"h": 75
+					},
+					"sourceSize": {
+						"w": 150,
+						"h": 75
+					},
+					"rotated": false
+				},
+				{
+					"filename": "o",
+					"frame": {
+						"x": 504,
+						"y": 322,
+						"w": 100,
+						"h": 100
+					},
+					"sourceSize": {
+						"w": 100,
+						"h": 100
+					},
+					"rotated": false
+				},
+				{
+					"filename": "replay",
+					"frame": {
+						"x": 402,
+						"y": 77,
+						"w": 150,
+						"h": 75
+					},
+					"sourceSize": {
+						"w": 150,
+						"h": 75
+					},
+					"rotated": false
+				},
+				{
+					"filename": "replayHover",
+					"frame": {
+						"x": 402,
+						"y": 154,
+						"w": 150,
+						"h": 75
+					},
+					"sourceSize": {
+						"w": 150,
+						"h": 75
+					},
+					"rotated": false
+				},
+				{
+					"filename": "startGame",
+					"frame": {
+						"x": 0,
+						"y": 322,
+						"w": 250,
+						"h": 90
+					},
+					"sourceSize": {
+						"w": 250,
+						"h": 90
+					},
+					"rotated": false
+				},
+				{
+					"filename": "startGameHover",
+					"frame": {
+						"x": 252,
+						"y": 322,
+						"w": 250,
+						"h": 90
+					},
+					"sourceSize": {
+						"w": 250,
+						"h": 90
+					},
+					"rotated": false
+				},
+				{
+					"filename": "startGamePress",
+					"frame": {
+						"x": 0,
+						"y": 414,
+						"w": 250,
+						"h": 90
+					},
+					"sourceSize": {
+						"w": 250,
+						"h": 90
+					},
+					"rotated": false
+				},
+				{
+					"filename": "white_pixel",
+					"frame": {
+						"x": 402,
+						"y": 308,
+						"w": 2,
+						"h": 2
+					},
+					"sourceSize": {
+						"w": 2,
+						"h": 2
+					},
+					"rotated": false
+				},
+				{
+					"filename": "x",
+					"frame": {
+						"x": 504,
+						"y": 424,
+						"w": 100,
+						"h": 100
+					},
+					"sourceSize": {
+						"w": 100,
+						"h": 100
+					},
+					"rotated": false
+				},
+				{
+					"filename": "z",
+					"frame": {
+						"x": 504,
+						"y": 526,
+						"w": 100,
+						"h": 100
+					},
+					"sourceSize": {
+						"w": 100,
+						"h": 100
+					},
+					"rotated": false
+				}
+			]
+		}
+	]
+}
