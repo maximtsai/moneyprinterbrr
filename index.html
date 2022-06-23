@@ -3,16 +3,24 @@
 <link href=data:, rel=icon>
 <head> 
     <meta charset="UTF-8" />
-    <title>Boom Tic-Tac-Toe</title>
+    <title>Money Printer, The Game</title>
     <link rel="icon" type="image/x-icon" href="/sprites/favicon.png">
 
     <script src="phaser.min.js"></script>
-    <script src="scripts/messageBus.js"></script>
-    <script src="scripts/buttonManager.js"></script>
-    <script src="scripts/button.js"></script>
-    <script src="scripts/mouseManager.js"></script>
-    <script src="scripts/audioManager.js"></script>
+    <script src="util/messageBus.js"></script>
+    <script src="util/buttonManager.js"></script>
+    <script src="util/updateManager.js"></script>
+    <script src="util/button.js"></script>
+    <script src="util/mouseManager.js"></script>
+    <script src="util/audioManager.js"></script>
+
     <script src="scripts/gameplaySetup.js"></script>
+    <script src="scripts/printer.js"></script>
+    <script src="scripts/bloomberg.js"></script>
+    <script src="scripts/optionsMenu.js"></script>
+    <script src="scripts/buttonsPanel.js"></script>
+    <script src="scripts/ctrScreen.js"></script>
+
     <script src="audioFiles.js"></script>
     <script src="imageFiles.js"></script>
     <script src="main.js"></script>
@@ -20,7 +28,7 @@
         body {
             margin: 0;
 			overflow: hidden;
-			background-color: #111111;
+			background-color: #333333;
         }
 		canvas {
 		    display:block;

@@ -1,0 +1,39 @@
+Hi Taylor,
+
+I had a great time with today's interview with Med! 
+
+I thought his general points on how he grew High5 and Boom quickly and successfully were fantastic:
+1. Know how to bring the tech and business together
+2. Have a long term strategy
+3. Forming the right team that can adapt to any ambiguity
+
+Even though 
+there is one nice thing about working on games, and that the end goal is almost always to create a product that users will find enjoyable to use.
+
+Hello Med! How should we begin today?
+
+So currently I see Boom is expanding to HTML5 web casino games. But are there any new technologies or tools that you may potentially use in the future? ex. I heard Unity was being used for prototyping ideas.   
+Threejs and js in general way to go, webfrienly, Unity more and more used, social gaming app. AR, potential. Unity3d by design is a gameeng.
+Real money games to next level, bring social features to them.
+
+before boom, you were at High5 Games and that you grew it from $7M to $100M in just 3 years. Is there any secret for growing the company that quickly? few formulas, knowing the tech and business bringing together. Multidisciplinary, ned to know where to going, strategy, transactional, building things build ontop of each other, roadmap, power of focus, right team, ambiguity, be good at blazing a path.
+
+Knowing how to bring the tech and business together
+Having a longer term strategy
+Forming the right team that can adapt to any new challenges
+
+Avaya Global Services
+
+Supreme court ruling opening sports betting. 
+
+Is there a roadmap or rough estimate of the number of real money casino games that boom is planning to make, or is it make new ones as long as it's profitable?
+
+Is there anything you personally really like about working at Boom?
+- Building things. trailblazing, challenges to tackle.
+
+Oculus, suits you wear
+
+operators for distributing games.
+
+Why you?
+Boom enter is looking for a JavaScript/HTML5 dev with experience in making games. During my time at EA, HTML5 game dev is exactly what I've worked most on. In my personal time I also like to practice making games on my own starting from nothing all the way to public release, and my most recent game Exhibit of Sorrows has actually been very well received with 25K plays in first week, +120K plays in first month. So I think I can help Boom create a lot of new great games.

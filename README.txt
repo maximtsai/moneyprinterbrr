@@ -1,10 +1,9 @@
-To run this game...
+To run this game, first start a local server in this folder.
 
-Method 1:
-If you are using Windows software, you can first run runServer8124.exe, then paste "localhost:8124" into the url bar of a web browser to start the game.
+If you are using Windows, you can open runServer8124.exe to start a local server. You can access the local server by going to localhost:8124 in a web browser.
 
-Method 2:
-Install python. Instructions on doing so can be found here:
+The (second) easiest way to do so is to install python. Instructions on doing so can be found here:
 https://developer.mozilla.org/en-US/docs/Learn/Common_questions/set_up_a_local_testing_server 
-Once you have python installed, run pythonRunServer.bat or python3RunServer.bat (depending on which version of python you've installed).
-The bat file is pointing to port 8124 and you can open it by going to localhost:8124 in a web browser.
+
+Once you have python installed, you can click on pythonRunServer.bat or python3RunServer.bat (depending on which version of python you've installed). The bat file is pointing to port 8124 and you can open it by going to localhost:8124 in a web browser.
+

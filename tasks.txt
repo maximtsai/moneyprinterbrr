@@ -1,0 +1,54 @@
+Options menu ($25)
+- Add a text line to the center that randomly displays 1 of X random lines. The lines can be placeholder text for now.
+- Add two placeholder buttons beneath the text line. Clicking on the buttons should open up a new window to some website like Google.
+- Make sure everything is destroyed in the destroy() function inside optionsMenu.js
+
+Buttons Panel
+Stage 1: ($75)
+- Add 8 buttons to the buttons panel. Each button should start out disabled. Use placeholder art for now.
+- Add two lines of text on top of each button. The first line of text will be the button description. It starts from the
+far left of the button. (Use .setOrigin(0, 0.5) to make text start from left). The second line of text will be the button price. It is placed at the far right of the button. (Use .setOrigin(1, 0.5) to make text start from left)
+
+Stage 2: ($100)
+Info: buttonsPanel.js will be listening to messageBus.publish("addButton", "button text", buttonCost, buttonFunction). handleAddButton(...) will handle the logic for this. 
+- When a messageBus.publish("addButton"...) is detected, the top-left most available button will update its text to use "button text" and buttonCost. Use button.setOnMouseUpFunc(buttonFunction) to make the button call buttonFunction when it's clicked.
+- Buttons are added in the following order:
+1    5
+2    6
+3    7
+4    8
+
+Stage 3: ($50)
+- When a button is pressed, it "disappears" (because these buttons are all one-time upgrades). All buttons "move up" one slot to fill in any empty space. Note that buttons and text should not actually move. They simply swap places upwards.
+
+
+
+
+
+
+Create button menu at bottom left
+- Contains 8 buttons arranged in two columns
+1    5
+2    6
+3    7
+4    8
+- Each button starts out disabled. (Look inside button.js to see how to set a button to the DISABLED state, should be button.setState(DISABLED))
+- On top of each button is a small line of text. This text is blank when the game starts out
+- when messageBus.publish('ActivateNewButton', 'new button text', someButtonFunction) is called, the top left disabled button becomes activated and it gets text 'new button text' on top of the button. - Buttons become enabled in the following order: Left side buttons first, then from top to bottom down.
+- When a button is clicked, it goes back to being disabled. But if there are any buttons lower in priority than it, then those buttons will move upwards to fill in the space. Note that you shouldn't actually move any buttons around, just change the text on top and what the button does when clicked on.
+
+Create options panel
+- Clicking on the OPTION$ button will open up an options menu.
+- The option menu contains the following buttons:
+	- A close button (x) at the top right which will close the options menu
+	- A volume slider where players can adjust volume from 0% to 100%
+	- A music slider where players can adjust music volume from 0% to 100%
+	- A checkbox with the line "Disable flying cash animations"
+	- A text line that randomly displays 1 of X random fortune cookie lines of text wishing the player good fortune on their investments
+	- Two donations buttons, one that leads to itch.io, another that leads to coffee (currently you can just make them lead to Google since the donation sites haven't been setup yet).
+	- The line: Donations are always welcome! (opens in new window)
+
+Create slider (very tricky, will be used for options panel)
+- Create a slider that extends Button.js. The slider can be dragged along a horizontal line and cannot be dragged outside of the line.
+
+Create stock market display (very very tricky, I'm going to do this one)

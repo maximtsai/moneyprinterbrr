@@ -2,11 +2,11 @@ let config = {
     type: Phaser.AUTO,
     scale: {
         parent: 'phaser-app',
-        width: 640,
-        height: 480
+        width: 1080,
+        height: 680
     },
     antialias: true,
-    backgroundColor: '#000000',
+    backgroundColor: '#001000',
     parent: 'phaser-example',
     scene: {
         preload: preload,
@@ -17,10 +17,11 @@ let config = {
 
 let game = new Phaser.Game(config); // var canvas = game.canvas;
 let gameConsts = {
-    width: 640,
-    halfWidth: 320,
-    height: 480,
-    halfHeight: 240
+    width: 1080,
+    halfWidth: 540,
+    height: 680,
+    halfHeight: 340,
+    SDK: null
 };
 let gameVars = {
     gameConstructed: false,
@@ -29,8 +30,9 @@ let gameVars = {
     mouseposy: 0,
     lastmousedown: {x: 0, y: 0},
 };
-let globalGameObjects = {};
-let globalScene = null; // Globall
+let globalObjects = {};
+let updateFunctions = {};
+let PhaserScene = null; // Global
 
 function preload ()
 {
@@ -39,7 +41,7 @@ function preload ()
 
 function create ()
 {
-    globalScene = this;;
+    PhaserScene = this;
     onPreloadComplete(this);
 }
 
@@ -49,7 +51,8 @@ function onPreloadComplete (scene)
     setupLoadingBar(scene);
 
     loadFileList(scene, audioFiles, 'audio');
-    loadFileList(scene, imageFiles, 'atlas');
+    loadFileList(scene, imageAtlases, 'atlas');
+    loadFileList(scene, imageFiles, 'image');
 
     scene.load.start();
 }
@@ -59,9 +62,11 @@ function onLoadComplete(scene) {
     setupGame(scene);
 }
 
-function update() {
+function update(time, delta) {
     // check mouse
-    buttonManager.update();
+    let deltaScale = delta / 16.67;
+    buttonManager.update(deltaScale);
+    updateManager.update(deltaScale);
 }
 
 function loadFileList(scene, filesList, type) {
