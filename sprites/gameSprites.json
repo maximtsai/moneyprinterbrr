@@ -231,6 +231,48 @@
 						"h": 100
 					},
 					"rotated": false
+				},
+				{
+					"filename": "donationLinkNormal",
+					"frame": {
+						"x": 1400,
+						"y": 400,
+						"w": 300,
+						"h": 100
+					},
+					"sourceSize": {
+						"w": 300,
+						"h": 100
+					},
+					"rotated": false
+				},
+				{
+					"filename": "donationLinkHover",
+					"frame": {
+						"x": 1400,
+						"y": 400,
+						"w": 300,
+						"h": 100
+					},
+					"sourceSize": {
+						"w": 300,
+						"h": 100
+					},
+					"rotated": false
+				},
+				{
+					"filename": "donationLinkPress",
+					"frame": {
+						"x": 1400,
+						"y": 400,
+						"w": 300,
+						"h": 100
+					},
+					"sourceSize": {
+						"w": 300,
+						"h": 100
+					},
+					"rotated": false
 				}
 			]
 		}
