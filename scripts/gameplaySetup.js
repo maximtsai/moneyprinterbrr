@@ -44,7 +44,9 @@ function setupGame() {
             "ref": "optionsPress"
         },
         onMouseUp: () => {
-            globalObjects.optionsMenu = new OptionsMenu(gameConsts.halfWidth, gameConsts.halfHeight);
+            if(globalObjects.optionsMenu == null || globalObjects.optionsMenu.isClosed == true){
+                globalObjects.optionsMenu = new OptionsMenu(gameConsts.halfWidth, gameConsts.halfHeight);
+            }
         }
     });
 

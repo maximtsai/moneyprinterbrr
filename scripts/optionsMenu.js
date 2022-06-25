@@ -7,6 +7,7 @@
     constructor(x, y, depth = 100) {
         this.bg = PhaserScene.add.image(x, y, 'optionsBackground');
         this.bg.setDepth(depth);
+        this.isClosed = false;
         this.closeButton = new Button(
         {
             normal: {
@@ -28,6 +29,7 @@
     }
 
     destroy() {
+        this.isClosed = true;
         this.bg.destroy();
         this.closeButton.destroy();
     }
