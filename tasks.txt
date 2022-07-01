@@ -3,6 +3,8 @@ Options menu ($25)
 - Add two placeholder buttons beneath the text line. Clicking on the buttons should open up a new window to some website like Google.
 - Make sure everything is destroyed in the destroy() function inside optionsMenu.js
 
+There's more work needed with the volume slider + checkboxes, but I'm going to handle those myself
+
 Buttons Panel
 Stage 1: ($75)
 - Add 8 buttons to the buttons panel. Each button should start out disabled. Use placeholder art for now.
