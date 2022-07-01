@@ -26,6 +26,11 @@ const imageFiles = [
 
     {name: 'closeButtonNormal', src: 'sprites/close_button_normal.png'},
     {name: 'closeButtonHover', src: 'sprites/close_button_hover.png'},
-    {name: 'closeButtonPress', src: 'sprites/close_button_press.png'}
+    {name: 'closeButtonPress', src: 'sprites/close_button_press.png'},
+
+    {name: 'donationLinkNormal', src: 'sprites/donationLinkNormal.png'},
+    {name: 'donationLinkHover', src: 'sprites/donationLinkHover.png'},
+    {name: 'donationLinkPress', src: 'sprites/donationLinkPress.png'}
+
 
 ];
