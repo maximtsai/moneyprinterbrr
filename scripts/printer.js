@@ -86,7 +86,6 @@ const PRINTER_CHECKPOINT_4 = -2.356;
                 acceleration = Math.max(-0.001, torque * 0.000025);
             }
 
-            console.log(deltaScale);
             this.spinnerVel += acceleration * deltaScale;
 
             this.guideArrow.x = this.spinner.x + (this.spinnerLength + 9) * Math.cos(this.spinner.rotation + this.spinnerVel);
@@ -146,6 +145,14 @@ const PRINTER_CHECKPOINT_4 = -2.356;
 
     checkpointHit(offsetX, offsetY) {
         this.createCashSign(this.x + offsetX, this.y + offsetY);
+        if (this.spinnerVel > 0) {
+            messageBus.publish('createCash', this.x - 90, this.y + 170, -8 - Math.random() * 8, - 5 -Math.random() * 5, Math.random() * 0.1);
+
+        } else {
+            messageBus.publish('createCash', this.x - 100, this.y - 170, -8 - Math.random() * 8, -Math.random() * 5, Math.random() * 0.1);
+
+        }
+
     }
 
     createCashSign(x, y) {

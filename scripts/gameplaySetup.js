@@ -56,6 +56,10 @@ function setupGame() {
     globalObjects.bloomberg = new Bloomberg(822, 75);
     globalObjects.buttonsPanel = new ButtonsPanel(286, 545);
     globalObjects.ctrScreen = new CTRScreen(285, 229);
+    globalObjects.cashManager = new cashManager();
+    updateManager.addFunction(globalObjects.cashManager.update);
+
+
 
 
     // TODO: Remove, this is just used for temporary testing

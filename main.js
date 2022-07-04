@@ -33,6 +33,10 @@ let gameVars = {
 let globalObjects = {};
 let updateFunctions = {};
 let PhaserScene = null; // Global
+let oldTime = 0;
+let deltaScale = 1;
+let timeUpdateCounter = 0;
+let timeUpdateCounterMax = 5;
 
 function preload ()
 {
@@ -41,6 +45,7 @@ function preload ()
 
 function create ()
 {
+    oldTime = Date.now();
     PhaserScene = this;
     onPreloadComplete(this);
 }
@@ -64,7 +69,16 @@ function onLoadComplete(scene) {
 
 function update(time, delta) {
     // check mouse
-    let deltaScale = delta / 16.67;
+    if (timeUpdateCounter >= timeUpdateCounterMax) {
+        timeUpdateCounter = 0;
+        let newTime = Date.now();
+        let deltaTime = newTime - oldTime;
+        oldTime = newTime;
+        deltaScale = Math.min(5, deltaTime / 100);
+    } else {
+        timeUpdateCounter++;
+    }
+
     buttonManager.update(deltaScale);
     updateManager.update(deltaScale);
 }
