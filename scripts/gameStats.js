@@ -54,10 +54,15 @@
         return this.title;
     }
 
+
     reset() {
         this.money = 0;
         this.stocks = 0;
         this.upgrades = {};
         this.title = "Junior Money Printer Operator";
+        this.sentimentShort = 25;
+        this.sentimentLong = 25;
     }
+
+
 }

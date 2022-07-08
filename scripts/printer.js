@@ -114,6 +114,8 @@ const PRINTER_CHECKPOINT_4 = -2.356;
 
         this.handleCheckpoints(oldRotation, this.spinner.rotation);
 
+
+
     }
 
     resetHandle() {
@@ -128,9 +130,14 @@ const PRINTER_CHECKPOINT_4 = -2.356;
         } else if (oldRot - newRot < -Math.PI) {
             oldRot += Math.PI * 2;
         }
+        let spinScale = Math.min(1, globalObjects.printer.spinnerVel / 0.075);
+
         if (this.lastCheckpointHit !== PRINTER_CHECKPOINT_1 && (PRINTER_CHECKPOINT_1 - oldRot) * (PRINTER_CHECKPOINT_1 - newRot) < 0) {
             this.lastCheckpointHit = PRINTER_CHECKPOINT_1;
             this.checkpointHit(130, 130);
+            if (tempSentiment > 0.85) {
+                zoomTemp(1 + tempSentiment * 0.005);
+            }
         } else if (this.lastCheckpointHit !== PRINTER_CHECKPOINT_2 && (PRINTER_CHECKPOINT_2 - oldRot) * (PRINTER_CHECKPOINT_2 - newRot) < 0) {
             this.lastCheckpointHit = PRINTER_CHECKPOINT_2;
             this.checkpointHit(-130, 130);
@@ -140,6 +147,9 @@ const PRINTER_CHECKPOINT_4 = -2.356;
         } else if (this.lastCheckpointHit !== PRINTER_CHECKPOINT_4 && (PRINTER_CHECKPOINT_4 - oldRot) * (PRINTER_CHECKPOINT_4 - newRot) < 0) {
             this.lastCheckpointHit = PRINTER_CHECKPOINT_4;
             this.checkpointHit(-130, -130);
+            if (tempSentiment > 0.85) {
+                zoomTemp(1 + tempSentiment * 0.005);
+            }
         }
     }
 

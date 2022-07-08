@@ -65,6 +65,17 @@ function onPreloadComplete (scene)
 function onLoadComplete(scene) {
     initializeSounds(scene);
     setupGame(scene);
+    // TODO Refactor
+    soundList['bgm1Lite'].play();
+    soundList['bgm1Main'].play();
+    soundList['bgm1Main'].on('complete', () => {
+        setTimeout(() => {
+            soundList['bgm1Lite'].play();
+            soundList['bgm1Main'].play();
+        }, 250);
+    });
+    soundList['bgm1Main'].volume = 0;
+
 }
 
 function update(time, delta) {
@@ -81,6 +92,8 @@ function update(time, delta) {
 
     buttonManager.update(deltaScale);
     updateManager.update(deltaScale);
+
+    updateSentimentTemp();
 }
 
 function loadFileList(scene, filesList, type) {
@@ -98,4 +111,36 @@ function loadFileList(scene, filesList, type) {
             break;
         }
     }
+}
+
+let tempSentiment = 0;
+let counterUpdate = 0;
+function updateSentimentTemp() {
+    if (globalObjects.printer) {
+        let spinScale = Math.min(1, globalObjects.printer.spinnerVel / 0.075);
+        if (spinScale > 0.6) {
+            tempSentiment = Math.min(1, tempSentiment + 0.003);
+        } else {
+            tempSentiment = Math.max(0, tempSentiment - 0.02);
+        }
+        let volAmt = tempSentiment * 0.75 + spinScale * 0.25;
+        soundList['bgm1Lite'].volume = 1 - volAmt * volAmt;
+        soundList['bgm1Main'].volume = volAmt * volAmt;
+    }
+    if (counterUpdate > 20) {
+        counterUpdate = 0;
+
+    } else {
+        counterUpdate++;
+    }
+}
+
+function zoomTemp(zoomAmt) {
+    PhaserScene.cameras.main.setZoom(zoomAmt);
+    PhaserScene.tweens.add({
+        targets: PhaserScene.cameras.main,
+        zoom: 1,
+        ease: "Cubic.easeOut",
+        duration: 200
+    });
 }
