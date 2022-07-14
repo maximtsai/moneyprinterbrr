@@ -6,8 +6,6 @@
  class CTRScreen {
     constructor(x, y) {
         this.bg = PhaserScene.add.image(x, y, 'ctrBase');
-
-
     }
 
 }

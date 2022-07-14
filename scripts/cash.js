@@ -29,6 +29,7 @@ class Cash {
     constructor(x, y, velX, velY, rotSpd) {
         this.initialize(x, y, velX, velY, rotSpd);
         this.activeVisual = PhaserScene.add.image(this.x, this.y, 'dollar1');
+        this.activeVisual.setDepth(5);
     }
 
     initialize(x, y, velX, velY) {

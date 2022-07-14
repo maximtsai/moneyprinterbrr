@@ -117,15 +117,20 @@ let tempSentiment = 0;
 let counterUpdate = 0;
 function updateSentimentTemp() {
     if (globalObjects.printer) {
-        let spinScale = Math.min(1, globalObjects.printer.spinnerVel / 0.075);
-        if (spinScale > 0.6) {
-            tempSentiment = Math.min(1, tempSentiment + 0.003);
+        let spinScale = Math.min(1, globalObjects.printer.spinnerVel / 0.065);
+        if (spinScale > 0.65) {
+            tempSentiment = Math.min(1, tempSentiment + 0.002);
         } else {
-            tempSentiment = Math.max(0, tempSentiment - 0.02);
+            tempSentiment = Math.max(0, tempSentiment - 0.005);
         }
-        let volAmt = tempSentiment * 0.75 + spinScale * 0.25;
-        soundList['bgm1Lite'].volume = 1 - volAmt * volAmt;
-        soundList['bgm1Main'].volume = volAmt * volAmt;
+        let volAmt;
+        if (tempSentiment < 0.98) {
+            volAmt = tempSentiment * 0.8 + spinScale * 0.03;
+        } else {
+            volAmt = 1;
+        }
+        soundList['bgm1Lite'].volume = 1 - volAmt;
+        soundList['bgm1Main'].volume = volAmt;
     }
     if (counterUpdate > 20) {
         counterUpdate = 0;

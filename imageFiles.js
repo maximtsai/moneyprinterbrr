@@ -12,6 +12,7 @@ const imageFiles = [
     {name: 'printerBase', src: 'sprites/printer_base.png'},
     {name: 'spinner', src: 'sprites/spinner.png'},
     {name: 'spinnerGlow', src: 'sprites/spinner_glow.png'},
+    {name: 'spinnerCircle', src: 'sprites/spinner_circle.png'},
     {name: 'ctrBase', src: 'sprites/ctr_base.png'},
     {name: 'optionsBackground', src: 'sprites/options_background.png'},
     {name: 'bloombergBase', src: 'sprites/bloomberg_base.png'},

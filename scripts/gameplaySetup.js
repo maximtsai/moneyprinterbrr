@@ -34,8 +34,8 @@ function setupGame() {
     {
         normal: {
             "ref": "optionsNormal",
-            "x": 1000,
-            "y": 650
+            "x": gameConsts.width - 55,
+            "y": gameConsts.height - 22
         },
         hover: {
             "ref": "optionsHover"
@@ -49,13 +49,16 @@ function setupGame() {
             }
         }
     });
+    globalObjects.optionsButton.setDepth(20);
 
-    globalObjects.printer = new Printer(805, 390);
+    globalObjects.printer = new Printer(820, 400);
     updateManager.addFunction(globalObjects.printer.update.bind(globalObjects.printer));
 
     globalObjects.bloomberg = new Bloomberg(822, 75);
     globalObjects.buttonsPanel = new ButtonsPanel(286, 545);
     globalObjects.ctrScreen = new CTRScreen(285, 229);
+    globalObjects.marketChart = new MarketChart(285, 220);
+    updateManager.addFunction(globalObjects.marketChart.update.bind(globalObjects.marketChart));
     globalObjects.cashManager = new cashManager();
     updateManager.addFunction(globalObjects.cashManager.update);
 

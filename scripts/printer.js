@@ -6,11 +6,17 @@ const PRINTER_CHECKPOINT_1 = 0.785;
 const PRINTER_CHECKPOINT_2 = 2.356;
 const PRINTER_CHECKPOINT_3 = -0.785;
 const PRINTER_CHECKPOINT_4 = -2.356;
+const PRINTER_SPINNER_LENGTH = 107;
+const PRINTER_MAX_ACCEL = 0.0008;
  
  class Printer {
     constructor(x, y, rotSpeedCap = 1, depth = 10) {
         this.bg = PhaserScene.add.image(x, y, 'printerBase');
         this.bg.setDepth(depth);
+
+        this.spinnerCircle = PhaserScene.add.image(x, y, 'spinnerCircle');
+        this.spinnerCircle.setDepth(depth);
+
         this.guideArrow = PhaserScene.add.image(0, -9999, 'arrow');
         this.guideArrow.setOrigin(0.01, 0.5);
         this.guideArrow.setDepth(depth);
@@ -30,16 +36,15 @@ const PRINTER_CHECKPOINT_4 = -2.356;
         this.spinnerVel = 0;
         this.spinnerMaxVel = 0.08;
 
-        this.spinnerLength = 190;
         this.handle = new Button(
         {
             normal: {
                 ref: "whitePixel",
-                scaleX: 65,
-                scaleY: 65,
-                alpha: 0.001,
-                x: this.spinner.x + this.spinnerLength * Math.cos(this.spinner.rotation),
-                y: this.spinner.y + this.spinnerLength * Math.sin(this.spinner.rotation)
+                scaleX: 55,
+                scaleY: 55,
+                alpha: 0,
+                x: this.spinner.x + PRINTER_SPINNER_LENGTH * Math.cos(this.spinner.rotation),
+                y: this.spinner.y + PRINTER_SPINNER_LENGTH * Math.sin(this.spinner.rotation)
             },
             onMouseUp: this.resetHandle.bind(this),
             isDraggable: true
@@ -58,8 +63,8 @@ const PRINTER_CHECKPOINT_4 = -2.356;
         if (this.handle.getIsDragged()) {
             let handleDragX = this.handle.getXPos();
             let handleDragY = this.handle.getYPos();
-            let spinnerX = this.spinner.x + this.spinnerLength * Math.cos(this.spinner.rotation);
-            let spinnerY = this.spinner.y + this.spinnerLength * Math.sin(this.spinner.rotation);
+            let spinnerX = this.spinner.x + PRINTER_SPINNER_LENGTH * Math.cos(this.spinner.rotation);
+            let spinnerY = this.spinner.y + PRINTER_SPINNER_LENGTH * Math.sin(this.spinner.rotation);
 
             let distX = handleDragX - spinnerX;
             let distY = handleDragY - spinnerY;
@@ -81,19 +86,19 @@ const PRINTER_CHECKPOINT_4 = -2.356;
 
             let acceleration = 0;
             if (torque > 0.01) {
-                acceleration = Math.min(0.001, torque * 0.000025);
+                acceleration = Math.min(PRINTER_MAX_ACCEL, torque * 0.000006);
             } else if (torque < -0.01) {
-                acceleration = Math.max(-0.001, torque * 0.000025);
+                acceleration = Math.max(-PRINTER_MAX_ACCEL, torque * 0.000006);
             }
 
             this.spinnerVel += acceleration * deltaScale;
 
-            this.guideArrow.x = this.spinner.x + (this.spinnerLength + 9) * Math.cos(this.spinner.rotation + this.spinnerVel);
-            this.guideArrow.y = this.spinner.y + (this.spinnerLength + 9) * Math.sin(this.spinner.rotation + this.spinnerVel);
+            this.guideArrow.x = this.spinner.x + PRINTER_SPINNER_LENGTH * Math.cos(this.spinner.rotation + this.spinnerVel);
+            this.guideArrow.y = this.spinner.y + PRINTER_SPINNER_LENGTH * Math.sin(this.spinner.rotation + this.spinnerVel);
 
             // this.guideArrow.rotation = rotation;
-            this.guideArrow.scaleX = Math.min(0.8, distTotal / 200);
-            this.guideArrow.scaleY = Math.min(0.8, distTotal / 200);
+            this.guideArrow.scaleX = Math.min(0.75, distTotal / 150);
+            this.guideArrow.scaleY = Math.min(0.75, distTotal / 150);
             this.guideArrow.rotation = forceAngle;
             this.guideArrow.visible = true;
         } else {
@@ -101,26 +106,25 @@ const PRINTER_CHECKPOINT_4 = -2.356;
             this.guideArrow.visible = false;
         }
         let oldRotation = this.spinner.rotation;
+        this.spinnerCircle.rotation = oldRotation;
         this.spinner.rotation += this.spinnerVel * deltaScale;
         this.spinnerGlow.rotation = this.spinner.rotation;
         if (Math.abs(this.spinnerVel) > this.spinnerMaxVel) {
             this.spinnerVel *= Math.abs(this.spinnerMaxVel / this.spinnerVel);
         }
         if (this.spinnerVel > 0) {
-            this.spinnerVel = Math.max(0, this.spinnerVel * 0.9999 - 0.0005 * deltaScale);
+            this.spinnerVel = Math.max(0, this.spinnerVel * (1 - (0.00006 * deltaScale)) - 0.0001 * deltaScale);
         } else {
-            this.spinnerVel = Math.min(0, this.spinnerVel * 0.9999 + 0.0005 * deltaScale);
+            this.spinnerVel = Math.min(0, this.spinnerVel * (1 - (0.00006 * deltaScale)) + 0.0001 * deltaScale);
         }
 
         this.handleCheckpoints(oldRotation, this.spinner.rotation);
 
-
-
     }
 
     resetHandle() {
-        let xPos = this.spinner.x + this.spinnerLength * Math.cos(this.spinner.rotation);
-        let yPos = this.spinner.y + this.spinnerLength * Math.sin(this.spinner.rotation);
+        let xPos = this.spinner.x + PRINTER_SPINNER_LENGTH * Math.cos(this.spinner.rotation);
+        let yPos = this.spinner.y + PRINTER_SPINNER_LENGTH * Math.sin(this.spinner.rotation);
         this.handle.setPos(xPos, yPos);
     }
 
