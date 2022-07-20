@@ -30,6 +30,9 @@ function setupLoadingBar(scene) {
 }
 
 function setupGame() {
+    globalObjects.gameStats = new GameStats();
+    globalObjects.upgradeManager = new UpgradeManager();
+
     globalObjects.optionsButton = new Button(
     {
         normal: {
@@ -56,13 +59,13 @@ function setupGame() {
 
     globalObjects.bloomberg = new Bloomberg(822, 75);
     globalObjects.buttonsPanel = new ButtonsPanel(286, 545);
-    globalObjects.ctrScreen = new CTRScreen(285, 229);
     globalObjects.marketChart = new MarketChart(285, 220);
     updateManager.addFunction(globalObjects.marketChart.update.bind(globalObjects.marketChart));
+    globalObjects.ctrScreen = new CTRScreen(285, 229);
     globalObjects.cashManager = new cashManager();
     updateManager.addFunction(globalObjects.cashManager.update);
 
-
+    globalObjects.moneyDisplay = new MoneyDisplay(25, gameConsts.height - 35);
 
 
     // TODO: Remove, this is just used for temporary testing

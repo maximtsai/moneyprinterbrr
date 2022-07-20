@@ -38,6 +38,7 @@ const UPDATE_INTERVAL = 120; // frames
             let newVal = (prevVal + (Math.random() - 0.5) * prevVal * 0.05) * 0.9 + this.trueMarketVal * 0.1;
             this.marketHistory.push(newVal);
         }
+        messageBus.publish("setMarketHistory", this.marketHistory);
     }
 
     initDisplay(x, y, depth) {
@@ -60,17 +61,17 @@ const UPDATE_INTERVAL = 120; // frames
     }
 
     setPriceText(newNum) {
-        let stringVer = (Math.ceil(newNum * 100) * 0.01).toString();
+        let stringVer = newNum.toString();
         let decPlace = stringVer.indexOf('.');
-        let cutString;
+
         if (decPlace === -1) {
             stringVer += '.00';
-            cutString = stringVer.slice(0, stringVer - 3);
-        } else {
+        } else if (decPlace === stringVer.length - 2) {
             stringVer += '0';
-            cutString = stringVer.slice(0, decPlace + 3);
+        } else if (decPlace < stringVer.length - 3) {
+            stringVer = stringVer.substring(0, decPlace + 3);
         }
-        this.priceText.setText("INDEX 9000: " + cutString);
+        this.priceText.setText("INDEX 9000: " + stringVer);
     }
 
     displayMarket() {
@@ -142,13 +143,16 @@ const UPDATE_INTERVAL = 120; // frames
         return this.y + DISPLAY_HEIGHT * 0.5 - DISPLAY_HEIGHT * percentageDown + DISPLAY_Y_OFFSET;
     }
 
-    generateNewMarketData() {
+    generateNewMarketData(updateDisplay = true) {
         let prevVal = this.marketHistory[this.marketHistory.length - 1];
         this.trueMarketVal *= LONG_TERM_GROWTH;
         let newVal = ((prevVal + (Math.random() - 0.5) * prevVal * 0.05) * 0.9 + this.trueMarketVal * 0.1) * (1 + tempSentiment * 0.05);
         this.marketHistory.push(newVal);
         this.marketHistory.shift();
-        this.displayMarket();
+        if (updateDisplay) {
+            this.displayMarket();
+        }
+        messageBus.publish("setMarketHistory", this.marketHistory);
     }
 
     update(deltaScale = 0) {

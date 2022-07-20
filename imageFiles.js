@@ -31,7 +31,15 @@ const imageFiles = [
 
     {name: 'donationLinkNormal', src: 'sprites/donationLinkNormal.png'},
     {name: 'donationLinkHover', src: 'sprites/donationLinkHover.png'},
-    {name: 'donationLinkPress', src: 'sprites/donationLinkPress.png'}
+    {name: 'donationLinkPress', src: 'sprites/donationLinkPress.png'},
 
+    {name: 'sellOne', src: 'sprites/sell_one.png'},
+    {name: 'sellTen', src: 'sprites/sell_ten.png'},
+    {name: 'sellAll', src: 'sprites/sell_all.png'},
 
+    {name: 'buyOne', src: 'sprites/buy_one.png'},
+    {name: 'buyTen', src: 'sprites/buy_ten.png'},
+    {name: 'buyAll', src: 'sprites/buy_all.png'},
+
+    {name: 'upgradeBtn', src: 'sprites/upgrade_btn.png'}
 ];

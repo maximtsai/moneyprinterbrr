@@ -7,7 +7,7 @@ const PRINTER_CHECKPOINT_2 = 2.356;
 const PRINTER_CHECKPOINT_3 = -0.785;
 const PRINTER_CHECKPOINT_4 = -2.356;
 const PRINTER_SPINNER_LENGTH = 107;
-const PRINTER_MAX_ACCEL = 0.0008;
+const PRINTER_MAX_ACCEL = 0.0005;
  
  class Printer {
     constructor(x, y, rotSpeedCap = 1, depth = 10) {
@@ -34,7 +34,7 @@ const PRINTER_MAX_ACCEL = 0.0008;
         this.depth = depth;
 
         this.spinnerVel = 0;
-        this.spinnerMaxVel = 0.08;
+        this.spinnerMaxVel = 0.07;
 
         this.handle = new Button(
         {
@@ -86,9 +86,9 @@ const PRINTER_MAX_ACCEL = 0.0008;
 
             let acceleration = 0;
             if (torque > 0.01) {
-                acceleration = Math.min(PRINTER_MAX_ACCEL, torque * 0.000006);
+                acceleration = Math.min(PRINTER_MAX_ACCEL + torque * 0.000001, torque * 0.000005);
             } else if (torque < -0.01) {
-                acceleration = Math.max(-PRINTER_MAX_ACCEL, torque * 0.000006);
+                acceleration = Math.max(-PRINTER_MAX_ACCEL + torque * 0.000001, torque * 0.000005);
             }
 
             this.spinnerVel += acceleration * deltaScale;
@@ -113,9 +113,9 @@ const PRINTER_MAX_ACCEL = 0.0008;
             this.spinnerVel *= Math.abs(this.spinnerMaxVel / this.spinnerVel);
         }
         if (this.spinnerVel > 0) {
-            this.spinnerVel = Math.max(0, this.spinnerVel * (1 - (0.00006 * deltaScale)) - 0.0001 * deltaScale);
+            this.spinnerVel = Math.max(0, this.spinnerVel * (1 - (0.00006 * deltaScale)) - 0.0002 * deltaScale);
         } else {
-            this.spinnerVel = Math.min(0, this.spinnerVel * (1 - (0.00006 * deltaScale)) + 0.0001 * deltaScale);
+            this.spinnerVel = Math.min(0, this.spinnerVel * (1 - (0.00006 * deltaScale)) + 0.0002 * deltaScale);
         }
 
         this.handleCheckpoints(oldRotation, this.spinner.rotation);
@@ -126,6 +126,16 @@ const PRINTER_MAX_ACCEL = 0.0008;
         let xPos = this.spinner.x + PRINTER_SPINNER_LENGTH * Math.cos(this.spinner.rotation);
         let yPos = this.spinner.y + PRINTER_SPINNER_LENGTH * Math.sin(this.spinner.rotation);
         this.handle.setPos(xPos, yPos);
+    }
+
+    upgradePrinter(type) {
+        if (type === 1) {
+
+        } else if (type === 2) {
+
+        } else if (type === 3) {
+            
+        }
     }
 
     handleCheckpoints(oldRot, newRot) {
@@ -161,12 +171,10 @@ const PRINTER_MAX_ACCEL = 0.0008;
         this.createCashSign(this.x + offsetX, this.y + offsetY);
         if (this.spinnerVel > 0) {
             messageBus.publish('createCash', this.x - 90, this.y + 170, -8 - Math.random() * 8, - 5 -Math.random() * 5, Math.random() * 0.1);
-
         } else {
             messageBus.publish('createCash', this.x - 100, this.y - 170, -8 - Math.random() * 8, -Math.random() * 5, Math.random() * 0.1);
-
         }
-
+        messageBus.publish("addMoney");
     }
 
     createCashSign(x, y) {

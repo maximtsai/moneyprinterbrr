@@ -14,11 +14,11 @@ class InternalButtonManager {
     }
 
     update(delta) {
-        this.updateCounter += delta;
-        if (this.updateCounter < this.updateInterval) {
-            return;
-        }
-        this.updateCounter = 0;
+        // this.updateCounter += delta;
+        // if (this.updateCounter < this.updateInterval) {
+        //     return;
+        // }
+        // this.updateCounter = 0;
         let handX = gameVars.mouseposx;
         let handY = gameVars.mouseposy;
         // check hovering

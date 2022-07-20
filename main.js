@@ -117,7 +117,7 @@ let tempSentiment = 0;
 let counterUpdate = 0;
 function updateSentimentTemp() {
     if (globalObjects.printer) {
-        let spinScale = Math.min(1, globalObjects.printer.spinnerVel / 0.065);
+        let spinScale = Math.min(1, Math.abs(globalObjects.printer.spinnerVel) / 0.065);
         if (spinScale > 0.65) {
             tempSentiment = Math.min(1, tempSentiment + 0.002);
         } else {

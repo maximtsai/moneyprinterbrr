@@ -77,6 +77,8 @@ class Button {
                 this.imageRefs[stateData.ref] = newImage;
             }
             newImage.visible = true;
+        } else {
+            stateData.ref = this.normal.ref;
         }
         let oldImage = this.imageRefs[this.oldImageRef];
         if (!oldImage) {
@@ -107,6 +109,11 @@ class Button {
             this.imageRefs[stateData.ref].scaleY = oldImage.scaleY || 1;
         } else {
             this.imageRefs[stateData.ref].scaleY = stateData.scaleY;
+        }
+        if (stateData.tint === undefined) {
+            this.imageRefs[stateData.ref].setTint(oldImage.tint) || 0xFFFFFF;
+        } else {
+            this.imageRefs[stateData.ref].setTint(stateData.tint);
         }
     }
 
