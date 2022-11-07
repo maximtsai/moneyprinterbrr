@@ -2,7 +2,7 @@ const CASH_GRAVITY = 0.1;
 const CASH_BOUNDS = 100;
 const CASH_DECAY = 0.018;
 
-class cashManager {
+class CashManager {
     constructor() {
         messageBus.subscribe("createCash", this.createCash.bind(this));
     }
@@ -52,7 +52,7 @@ class Cash {
         this.velX *= decayAmt;
         this.velY *= decayAmt;
         this.rotSpd *= decayAmt;
-        this.velY += CASH_GRAVITY * decayAmt;
+        this.velY += CASH_GRAVITY * decayAmt * deltaScale;
         this.rotSpd += (Math.random() - 0.5) * 0.01;
 
 

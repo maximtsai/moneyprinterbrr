@@ -6,25 +6,33 @@
  class ButtonsPanel {
     constructor(x, y) {
         this.bg = PhaserScene.add.image(x, y, 'buttonsPanelBase');
-
-
         this.initButtons(x, y);
-
         messageBus.subscribe("addUpgradeButton", this.handleAddButton.bind(this));
+        messageBus.subscribe("addUpgradeButtonEnd", (text, cost, func) => {this.handleAddButton(text, cost, func, true)});
         messageBus.subscribe("addMoney", this.refreshButtonBuys.bind(this));
 
     }
 
-    handleAddButton(buttonText = '', buttonCost = 1, buttonFunc) {
+    handleAddButton(buttonText = '', buttonCost = 1, buttonFunc, getFromEnd = false) {
         console.log(buttonText, buttonCost);
         // Do stuff
         let nextFreeButton;
-        for (let i = 0; i < this.listOfButtons.length; i++) {
-            nextFreeButton = this.listOfButtons[i];
-            if (nextFreeButton.isAvailable) {
-                break;
+        if (getFromEnd) {
+            for (let i = this.listOfButtons.length - 1; i >= 0; i--) {
+                nextFreeButton = this.listOfButtons[i];
+                if (nextFreeButton.isAvailable) {
+                    break;
+                }
+            }   
+        } else {
+            for (let i = 0; i < this.listOfButtons.length; i++) {
+                nextFreeButton = this.listOfButtons[i];
+                if (nextFreeButton.isAvailable) {
+                    break;
+                }
             }
         }
+
         nextFreeButton.isAvailable = false;
         // this.enableButton(nextFreeButton);
         nextFreeButton.descText.setText(buttonText);
@@ -32,9 +40,14 @@
         this.disableButton(nextFreeButton);
         nextFreeButton.price = buttonCost;
         nextFreeButton.setOnMouseUpFunc(() => {
-            buttonFunc();
-            messageBus.publish("addMoney", -buttonCost);
-            this.hideButton(nextFreeButton);
+            let moneyAmt = globalObjects.gameStats.getMoney();
+            if (moneyAmt >= buttonCost) {
+                buttonFunc();
+                messageBus.publish("addMoney", -buttonCost);
+                this.hideButton(nextFreeButton);
+            } else {
+                this.disableButton(nextFreeButton);
+            }
         });
     }
 
@@ -84,9 +97,11 @@
     }
 
     enableButton(button) {
-        button.setState(NORMAL);
-        button.descText.alpha = 1;
-        button.priceText.alpha = 1;
+        if (button.getState() === DISABLE) {
+            button.setState(NORMAL);
+            button.descText.alpha = 1;
+            button.priceText.alpha = 1;
+        }
     }
 
     disableButton(button) {
@@ -111,8 +126,10 @@
         let moneyAmt = globalObjects.gameStats.getMoney();
         for (let i = 0; i < this.listOfButtons.length; i++) {
             let currButton = this.listOfButtons[i];
-            if (currButton.price !== -1 && moneyAmt > currButton.price) {
+            if (currButton.price !== -1 && moneyAmt >= currButton.price) {
                 this.enableButton(currButton);
+            } else {
+                this.disableButton(currButton);
             }
         }
     }

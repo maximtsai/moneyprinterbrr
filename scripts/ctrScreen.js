@@ -2,15 +2,16 @@
  * This file contains the code for the computer screen at the top left
  * 
  **/
- const TRANSACTION_FEE = 4.95;
+ const TRANSACTION_FEE = 0.01;
  class CTRScreen {
    constructor(x, y) {
          this.bg = PhaserScene.add.image(x, y, 'ctrBase');
-         let feeFont = {fontFamily: 'Arial', fontSize: 12, color: '#909090', align: 'right'};
-         this.feeText = PhaserScene.add.text(x + 14, y + 159, "$"+TRANSACTION_FEE+" TRANSACTION FEE PER BUY ORDER", feeFont);
+         // let feeFont = {fontFamily: 'Arial', fontSize: 13, color: '#999999', align: 'right'};
+         // this.feeText = PhaserScene.add.text(x + 263, y + 158, "$"+TRANSACTION_FEE+" TRANSACTION FEE PER BUY ORDER", feeFont);
+         // this.feeText.setOrigin(1, 0);
 
-         let portfolioFont = {fontFamily: 'Arial', fontSize: 12, color: '#000000', align: 'left'};
-         this.portfolioText = PhaserScene.add.text(x - 260, y + 159, "Account Value: $0.00", portfolioFont);
+         let portfolioFont = {fontFamily: 'Arial', fontSize: 16, color: '#000000', align: 'left'};
+         this.portfolioText = PhaserScene.add.text(x - 260, y + 156, "Account Value: $0.00", portfolioFont);
          // this.feeText.setDepth(10);
          this.createButtons(x, y);
          let stockFont = {fontFamily: 'Arial', fontSize: 18, color: '#000000', align: 'center'};
@@ -192,9 +193,9 @@
       let moneyAmt = globalObjects.gameStats.getMoney();
       let stockPrice = globalObjects.gameStats.getStockPrice();
       if (amt === 'all') {
-         amt = Math.floor((moneyAmt - TRANSACTION_FEE) / stockPrice);
+         amt = Math.floor((moneyAmt) / stockPrice);
       }
-      let purchaseCost = stockPrice * amt + TRANSACTION_FEE;
+      let purchaseCost = stockPrice * amt;
       if (moneyAmt >= purchaseCost) {
          messageBus.publish("addStocks", amt);
          messageBus.publish("addMoney", -purchaseCost);
@@ -212,7 +213,7 @@
          amt = stockAmt;
       }
       if (stockAmt >= amt) {
-         let sellMoney = stockPrice * amt;
+         let sellMoney = stockPrice * amt * (1 - TRANSACTION_FEE);
          messageBus.publish("addStocks", -amt);
          messageBus.publish("addMoney", sellMoney);
          this.updatePortfolioText();

@@ -5,6 +5,7 @@ const audioFiles = [
     {name: 'win', src: 'audio/win.mp3'},
 
     {name: 'bgm1Lite', src: 'audio/bgm1_lite.mp3'},
-    {name: 'bgm1Main', src: 'audio/bgm1_main.mp3'}
+    {name: 'bgm1Main', src: 'audio/bgm1_main.mp3'},
+    {name: 'bgm1Fast', src: 'audio/bgm1_fast.mp3'}
 
 ]

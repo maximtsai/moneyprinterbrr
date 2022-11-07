@@ -10,7 +10,7 @@ const MARKET_DAY = "day";
 const MARKET_WEEK = "week";
 const MARKET_MAX_DISPLAY = 38;
 const DISPLAY_HEIGHT = 320;
-const DISPLAY_Y_OFFSET = 19;
+const DISPLAY_Y_OFFSET = 17;
 const UPDATE_INTERVAL = 120; // frames
 
  class MarketChart {

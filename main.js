@@ -6,7 +6,8 @@ let config = {
         height: 680
     },
     antialias: true,
-    backgroundColor: '#001000',
+    transparent: false,
+    roundPixels: true,
     parent: 'phaser-example',
     scene: {
         preload: preload,
@@ -29,6 +30,9 @@ let gameVars = {
     mouseposx: 0,
     mouseposy: 0,
     lastmousedown: {x: 0, y: 0},
+    maxBrrr: false,
+    maxBrrrPhase2: false,
+    printerIsBroken: false
 };
 let globalObjects = {};
 let updateFunctions = {};
@@ -76,6 +80,7 @@ function onLoadComplete(scene) {
     });
     soundList['bgm1Main'].volume = 0;
 
+    gameVars.marketSentTemp = new MarketSentiment();
 }
 
 function update(time, delta) {
@@ -94,6 +99,9 @@ function update(time, delta) {
     updateManager.update(deltaScale);
 
     updateSentimentTemp();
+    if (gameVars.marketSentTemp) {
+        // gameVars.marketSentTemp.updateTick();
+    }
 }
 
 function loadFileList(scene, filesList, type) {
@@ -123,14 +131,25 @@ function updateSentimentTemp() {
         } else {
             tempSentiment = Math.max(0, tempSentiment - 0.005);
         }
+        if (gameVars.maxBrrrPhase2) {
+            tempSentiment = 4;
+        } else if (gameVars.maxBrrr) {
+            tempSentiment = 2;
+        } else if (gameVars.printerIsBroken) {
+            tempSentiment = 0;
+        }
         let volAmt;
         if (tempSentiment < 0.98) {
             volAmt = tempSentiment * 0.8 + spinScale * 0.03;
         } else {
             volAmt = 1;
         }
-        soundList['bgm1Lite'].volume = 1 - volAmt;
-        soundList['bgm1Main'].volume = volAmt;
+        soundList['bgm1Lite'].volume = 0; // 1 - volAmt;
+        if (gameVars.maxBrrr || gameVars.printerIsBroken) {
+            soundList['bgm1Main'].volume = 0;
+        } else if (!gameVars.showingMaxBrrr) {
+            soundList['bgm1Main'].volume = 1;
+        }
     }
     if (counterUpdate > 20) {
         counterUpdate = 0;

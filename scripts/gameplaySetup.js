@@ -30,6 +30,8 @@ function setupLoadingBar(scene) {
 }
 
 function setupGame() {
+    PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight, 'background');
+
     globalObjects.gameStats = new GameStats();
     globalObjects.upgradeManager = new UpgradeManager();
 
@@ -54,6 +56,10 @@ function setupGame() {
     });
     globalObjects.optionsButton.setDepth(20);
 
+    globalObjects.lights = new Lights(25);
+    updateManager.addFunction(globalObjects.lights.update.bind(globalObjects.lights));
+
+
     globalObjects.printer = new Printer(820, 400);
     updateManager.addFunction(globalObjects.printer.update.bind(globalObjects.printer));
 
@@ -62,10 +68,18 @@ function setupGame() {
     globalObjects.marketChart = new MarketChart(285, 220);
     updateManager.addFunction(globalObjects.marketChart.update.bind(globalObjects.marketChart));
     globalObjects.ctrScreen = new CTRScreen(285, 229);
-    globalObjects.cashManager = new cashManager();
+    globalObjects.cashManager = new CashManager();
     updateManager.addFunction(globalObjects.cashManager.update);
+    globalObjects.interestManager = new InterestManager();
+    updateManager.addFunction(globalObjects.interestManager.update);
+    globalObjects.maxBrrrButton = new MaxBrrrButton(595, 800);
 
-    globalObjects.moneyDisplay = new MoneyDisplay(25, gameConsts.height - 35);
+    setTimeout(() => {
+        messageBus.publish('showBrrrButton');
+    }, 20000);
+
+
+    globalObjects.miscDisplays = new MiscDisplays(25, gameConsts.height - 35);
 
 
     // TODO: Remove, this is just used for temporary testing

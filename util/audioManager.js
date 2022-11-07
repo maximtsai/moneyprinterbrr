@@ -16,7 +16,7 @@ function playSound(name, volume = 1) {
 }
 
 function tweenVolume(name, volume, duration = 1500) {
-    PhaserScene.tweens.timeline({
+    return PhaserScene.tweens.timeline({
         targets: [soundList[name]],
         tweens: [
             {

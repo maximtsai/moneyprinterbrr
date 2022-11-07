@@ -17,6 +17,16 @@ const PRINTER_MAX_ACCEL = 0.0005;
         this.spinnerCircle = PhaserScene.add.image(x, y, 'spinnerCircle');
         this.spinnerCircle.setDepth(depth);
 
+        this.fire1 = PhaserScene.add.image(x, y, 'fire1');
+        this.fire1.setDepth(depth);
+        this.fire1.visible = false;
+        this.fire1.setScale(0.5);
+
+        this.fire2 = PhaserScene.add.image(x, y, 'fire2');
+        this.fire2.setDepth(depth);
+        this.fire2.visible = false;
+        this.fire2.setScale(0.5);
+
         this.guideArrow = PhaserScene.add.image(0, -9999, 'arrow');
         this.guideArrow.setOrigin(0.01, 0.5);
         this.guideArrow.setDepth(depth);
@@ -25,6 +35,10 @@ const PRINTER_MAX_ACCEL = 0.0005;
         this.spinnerGlow.setDepth(depth);
         this.spinner = PhaserScene.add.image(x, y, 'spinner');
         this.spinner.setDepth(depth);
+        this.spinnerDisabled = PhaserScene.add.image(x, y, 'spinnerDisabled');
+        this.spinnerDisabled.setDepth(depth);
+        this.spinnerDisabled.visible = false;
+
 
         this.billArray = [];
         this.freeCashSignArray = [];
@@ -35,6 +49,7 @@ const PRINTER_MAX_ACCEL = 0.0005;
 
         this.spinnerVel = 0;
         this.spinnerMaxVel = 0.07;
+        this.maxBrrr = false;
 
         this.handle = new Button(
         {
@@ -52,15 +67,26 @@ const PRINTER_MAX_ACCEL = 0.0005;
 
         this.lastPointGotMoney = null;
 
+        messageBus.subscribe("activateMaxBrrr", this.startFire.bind(this));
+        messageBus.subscribe("activateMaxBrrrPhase2", this.startFire2.bind(this));
+        messageBus.subscribe("endMaxBrrr", this.stopFire.bind(this));
     }
 
     update(deltaScale) {
         if (this.handle.getIsInteracted()) {
             this.spinner.visible = false;
-        } else {
+        } else if (!gameVars.printerIsBroken) {
             this.spinner.visible = true;
         }
-        if (this.handle.getIsDragged()) {
+        let shouldUpdateGuideArrow = false;
+        if (gameVars.maxBrrr) {
+            if (gameVars.maxBrrrPhase2) {
+                this.spinnerVel = 0.44;
+            } else {
+                this.spinnerVel = 0.25;
+            }
+        }
+        if (this.handle.getIsDragged() && !gameVars.printerIsBroken) {
             let handleDragX = this.handle.getXPos();
             let handleDragY = this.handle.getYPos();
             let spinnerX = this.spinner.x + PRINTER_SPINNER_LENGTH * Math.cos(this.spinner.rotation);
@@ -93,9 +119,7 @@ const PRINTER_MAX_ACCEL = 0.0005;
 
             this.spinnerVel += acceleration * deltaScale;
 
-            this.guideArrow.x = this.spinner.x + PRINTER_SPINNER_LENGTH * Math.cos(this.spinner.rotation + this.spinnerVel);
-            this.guideArrow.y = this.spinner.y + PRINTER_SPINNER_LENGTH * Math.sin(this.spinner.rotation + this.spinnerVel);
-
+            shouldUpdateGuideArrow = true;
             // this.guideArrow.rotation = rotation;
             this.guideArrow.scaleX = Math.min(0.75, distTotal / 150);
             this.guideArrow.scaleY = Math.min(0.75, distTotal / 150);
@@ -109,7 +133,12 @@ const PRINTER_MAX_ACCEL = 0.0005;
         this.spinnerCircle.rotation = oldRotation;
         this.spinner.rotation += this.spinnerVel * deltaScale;
         this.spinnerGlow.rotation = this.spinner.rotation;
-        if (Math.abs(this.spinnerVel) > this.spinnerMaxVel) {
+
+        if (shouldUpdateGuideArrow) {
+            this.guideArrow.x = this.spinner.x + PRINTER_SPINNER_LENGTH * Math.cos(this.spinner.rotation + this.spinnerVel);
+            this.guideArrow.y = this.spinner.y + PRINTER_SPINNER_LENGTH * Math.sin(this.spinner.rotation + this.spinnerVel);
+        }
+        if (Math.abs(this.spinnerVel) > this.spinnerMaxVel && !gameVars.maxBrrr) {
             this.spinnerVel *= Math.abs(this.spinnerMaxVel / this.spinnerVel);
         }
         if (this.spinnerVel > 0) {
@@ -134,7 +163,7 @@ const PRINTER_MAX_ACCEL = 0.0005;
         } else if (type === 2) {
 
         } else if (type === 3) {
-            
+
         }
     }
 
@@ -150,7 +179,7 @@ const PRINTER_MAX_ACCEL = 0.0005;
             this.lastCheckpointHit = PRINTER_CHECKPOINT_1;
             this.checkpointHit(130, 130);
             if (tempSentiment > 0.85) {
-                zoomTemp(1 + tempSentiment * 0.005);
+                zoomTemp(1 + tempSentiment * 0.006);
             }
         } else if (this.lastCheckpointHit !== PRINTER_CHECKPOINT_2 && (PRINTER_CHECKPOINT_2 - oldRot) * (PRINTER_CHECKPOINT_2 - newRot) < 0) {
             this.lastCheckpointHit = PRINTER_CHECKPOINT_2;
@@ -162,17 +191,23 @@ const PRINTER_MAX_ACCEL = 0.0005;
             this.lastCheckpointHit = PRINTER_CHECKPOINT_4;
             this.checkpointHit(-130, -130);
             if (tempSentiment > 0.85) {
-                zoomTemp(1 + tempSentiment * 0.005);
+                zoomTemp(1 + tempSentiment * 0.006);
             }
         }
     }
 
     checkpointHit(offsetX, offsetY) {
         this.createCashSign(this.x + offsetX, this.y + offsetY);
+        let brrrMultiplier = 1;
+        if (gameVars.maxBrrrPhase2) {
+            brrrMultiplier = 1.75;
+        } else if (gameVars.maxBrrr) {
+            brrrMultiplier = 1.3;
+        }
         if (this.spinnerVel > 0) {
-            messageBus.publish('createCash', this.x - 90, this.y + 170, -8 - Math.random() * 8, - 5 -Math.random() * 5, Math.random() * 0.1);
+            messageBus.publish('createCash', this.x - 90, this.y + 170, -8 - Math.random() * 8 * brrrMultiplier, - 5 -Math.random() * 5 * brrrMultiplier, Math.random() * 0.1 * brrrMultiplier);
         } else {
-            messageBus.publish('createCash', this.x - 100, this.y - 170, -8 - Math.random() * 8, -Math.random() * 5, Math.random() * 0.1);
+            messageBus.publish('createCash', this.x - 100, this.y - 170, -8 - Math.random() * 8 * brrrMultiplier, -Math.random() * 5 * brrrMultiplier, Math.random() * 0.1 * brrrMultiplier);
         }
         messageBus.publish("addMoney");
     }
@@ -203,5 +238,63 @@ const PRINTER_MAX_ACCEL = 0.0005;
             ]
         });
 
+    }
+
+    startFire() {
+        this.fire1.visible = true;
+        this.fire1.scaleX = 0.5; this.fire1.scaleY = 0.5; this.fire1.alpha = 0.5;
+        PhaserScene.tweens.timeline({
+            targets: [this.fire1],
+            tweens: [
+                {
+                    alpha: 1,
+                    scaleX: 1,
+                    scaleY: 1,
+                    duration: 5000,
+                    ease: 'Quad.easeIn',
+                    delay: 500
+                }
+            ]
+        });
+    }
+
+    startFire2() {
+        this.fire2.visible = true;
+        this.fire2.scaleX = 0.5; this.fire2.scaleY = 0.5; this.fire2.alpha = 0.5;
+        PhaserScene.tweens.timeline({
+            targets: [this.fire2],
+            tweens: [
+                {
+                    alpha: 1,
+                    scaleX: 3,
+                    scaleY: 3,
+                    duration: 6000,
+                    ease: 'Cubic.easeIn'
+                }
+            ]
+        });
+    }
+
+    stopFire() {
+        this.fire1.scaleX = 15; this.fire1.scaleY = 15;
+        this.fire1.alpha = 1;
+        PhaserScene.tweens.timeline({
+            targets: [this.fire1],
+            tweens: [
+                {
+                    alpha: 0,
+                    duration: 1500,
+                    ease: 'Quad.easeOut'
+                }
+            ]
+        });
+        this.fire2.visible = false;
+
+        this.spinnerGlow.visible = false;
+        this.spinner.visible = false;
+        this.spinnerDisabled.visible = true;
+        this.spinnerDisabled.rotation = this.spinnerGlow.rotation;
+        this.spinnerVel = 0;
+        gameVars.printerIsBroken = true;
     }
 }

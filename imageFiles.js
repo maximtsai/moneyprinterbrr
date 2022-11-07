@@ -12,6 +12,7 @@ const imageFiles = [
     {name: 'printerBase', src: 'sprites/printer_base.png'},
     {name: 'spinner', src: 'sprites/spinner.png'},
     {name: 'spinnerGlow', src: 'sprites/spinner_glow.png'},
+    {name: 'spinnerDisabled', src: 'sprites/spinner_disabled.png'},
     {name: 'spinnerCircle', src: 'sprites/spinner_circle.png'},
     {name: 'ctrBase', src: 'sprites/ctr_base.png'},
     {name: 'optionsBackground', src: 'sprites/options_background.png'},
@@ -41,5 +42,19 @@ const imageFiles = [
     {name: 'buyTen', src: 'sprites/buy_ten.png'},
     {name: 'buyAll', src: 'sprites/buy_all.png'},
 
-    {name: 'upgradeBtn', src: 'sprites/upgrade_btn.png'}
+    {name: 'upgradeBtn', src: 'sprites/upgrade_btn.png'},
+
+    {name: 'background', src: 'sprites/background.png'},
+    {name: 'radio', src: 'sprites/radio.png'},
+
+    {name: 'glassScratch', src: 'sprites/glass_scratch.png'},
+    {name: 'outOfOrder', src: 'sprites/out_of_order.png'},
+    {name: 'lights', src: 'sprites/lights.png'},
+    {name: 'note', src: 'sprites/note.png'},
+
+    {name: 'maxBrrrNormal', src: 'sprites/max_brrr_normal.png'},
+    {name: 'maxBrrrHover', src: 'sprites/max_brrr_hover.png'},
+    {name: 'maxBrrrPress', src: 'sprites/max_brrr_press.png'},
+    {name: 'fire1', src: 'sprites/fire_1.png'},
+    {name: 'fire2', src: 'sprites/fire_2.png'}
 ];

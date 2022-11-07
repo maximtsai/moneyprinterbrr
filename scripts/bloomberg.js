@@ -9,6 +9,8 @@
  class Bloomberg {
     constructor(x, y) {
         this.bg = PhaserScene.add.image(x, y, 'bloombergBase');
+        this.outOfOrder = PhaserScene.add.image(x, y, 'outOfOrder');
+        this.scratch = PhaserScene.add.image(x, y, 'glassScratch');
         this.createTextLines(x, y);
 
         // This line listens to messageBus.publish('bloombergNews', ...); then runs updateBloomberg()
